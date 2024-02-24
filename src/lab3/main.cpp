@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -9,9 +10,10 @@ protected:
     int floors;
     int countOfRooms;
     int square;
+    int yearOfConstruction;
 
 public:
-    House(const string a, int f, int cor, int s) : adress(a), floors(f), countOfRooms(cor), square(s) {}
+    House(const string a, int f, int cor, int s, int year) : adress(a), floors(f), countOfRooms(cor), square(s), yearOfConstruction(year) {}
 
     ~House()
     {
@@ -34,7 +36,7 @@ protected:
     bool pool;
 
 public:
-    Villa(const string a, int f, int cor, int s, bool p) : House(a, f, cor, s), pool(p) {}
+    Villa(const string a, int f, int cor, int s, int year, bool p) : House(a, f, cor, s, year), pool(p) {}
 
     ~Villa()
     {
@@ -55,7 +57,7 @@ protected:
     bool garden;
 
 public:
-    Mansion(const string a, int f, int cor, int s, bool ba, bool ga) : House(a, f, cor, s), basement(ba), garden(ga) {}
+    Mansion(const string a, int f, int cor, int s, int year, bool ba, bool ga) : House(a, f, cor, s, year), basement(ba), garden(ga) {}
 
     ~Mansion()
     {
@@ -73,9 +75,9 @@ public:
 
 int main()
 {
-    House house("Googlya", 3, 8, 180);
-    Villa villa("Miami", 5, 23, 180, true);
-    Mansion mansion("Pushkina", 8, 56, 1245, true, true);
+    House house("Leopard", 3, 8, 180, 2004);
+    Villa villa("Miami", 5, 23, 180, 1998, true);
+    Mansion mansion("Pushkina", 8, 56, 1245, 2012, true, true);
 
     house.Show();
     villa.Show();
