@@ -6,24 +6,24 @@ using namespace std;
 class House
 {
 protected:
-    string adress;
+    string address;
     int floors;
     int countOfRooms;
     int square;
     int yearOfConstruction;
 
 public:
-    House(const string a, int f, int cor, int s, int year) : adress(a), floors(f), countOfRooms(cor), square(s), yearOfConstruction(year) {}
+    House(const string a, int f, int cor, int s, int year) : address(a), floors(f), countOfRooms(cor), square(s), yearOfConstruction(year) {}
 
     ~House()
     {
-        cout << "Destructor House = " << adress << endl;
+        cout << "Destructor House = " << address << endl;
     }
 
     virtual void Show()
     {
         cout << "--------------------------" << endl;
-        cout << "ADRESS = " << adress << endl;
+        cout << "address = " << address << endl;
         cout << "FLOOR = " << floors << endl;
         cout << "COUNT OF ROOMS = " << countOfRooms << endl;
         cout << "SQUARE = " << square << endl;
@@ -40,7 +40,7 @@ public:
 
     ~Villa()
     {
-        cout << "Destructor Villa = " << adress << endl;
+        cout << "Destructor Villa = " << address << endl;
     }
 
     void Show() override
@@ -61,7 +61,7 @@ public:
 
     ~Mansion()
     {
-        cout << "Destructor Mansion = " << adress << endl;
+        cout << "Destructor Mansion = " << address << endl;
     }
 
     void Show() override
@@ -77,7 +77,7 @@ int main()
 {
     House house("Leopard", 3, 8, 180, 2004);
     Villa villa("Miami", 5, 23, 180, 1998, true);
-    Mansion mansion("Pushkina", 8, 56, 1245, 2012, true, true);
+    Mansion mansion("Pushkin", 8, 56, 1245, 2012, true, true);
 
     house.Show();
     villa.Show();
