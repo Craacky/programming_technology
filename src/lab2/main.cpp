@@ -2,34 +2,34 @@
 
 using namespace std;
 
-class Node
-{
-public:
-    int data;
-    Node *next;
-
-    Node(int data)
-    {
-        this->data = data;
-        next = nullptr;
-    }
-};
-
+template <typename T>
 class Queue
 {
-public:
-    Node *front;
-    Node *rear;
+private:
+    struct Node
+    {
+        T data;
+        Node *next;
 
+        Node(const T &data)
+        {
+            this->data = data;
+            next = nullptr;
+        }
+    };
+
+    Node *front, *rear;
+
+public:
     Queue()
     {
         front = rear = nullptr;
     }
 
-    void enqueue(int data)
+    void enqueue(const T &data)
     {
         Node *newNode = new Node(data);
-        if (rear == nullptr)
+        if (isEmpty())
         {
             front = rear = newNode;
         }
@@ -40,175 +40,106 @@ public:
         }
     }
 
-    void dequeue()
+    T dequeue()
     {
+        if (isEmpty())
+        {
+            cout << "Queue empty!" << endl;
+            exit(1);
+        }
+
+        T data = front->data;
+        Node *temp = front;
+        front = front->next;
+        delete temp;
+
         if (front == nullptr)
         {
-            cout << "Empty query!" << endl;
-            return;
+            rear = nullptr;
         }
-        else if (front == rear)
-        {
-            front = rear = nullptr;
-        }
-        else
-        {
-            Node *temp = front;
-            front = front->next;
-            delete temp;
-        }
+
+        return data;
     }
 
-    Queue operator+(const Queue &other)
+    bool isEmpty() const
     {
-        Queue newQueue;
-        Node *temp1 = this->front;
-        Node *temp2 = other.front;
-
-        while (temp1 != nullptr && temp2 != nullptr)
-        {
-            newQueue.enqueue(temp1->data + temp2->data);
-            temp1 = temp1->next;
-            temp2 = temp2->next;
-        }
-
-        return newQueue;
+        return front == nullptr;
     }
 
-    Queue operator-(const Queue &other)
+    T &operator[](int index)
     {
-        Queue newQueue;
-        Node *temp1 = this->front;
-        Node *temp2 = other.front;
-
-        while (temp1 != nullptr && temp2 != nullptr)
+        if (isEmpty())
         {
-            newQueue.enqueue(temp1->data - temp2->data);
-            temp1 = temp1->next;
-            temp2 = temp2->next;
+            cout << "Queue empty!" << endl;
+            exit(1);
         }
 
-        return newQueue;
-    }
-    Queue operator=(const Queue &other)
-    {
-        while (front != nullptr)
+        Node *temp = front;
+        for (int i = 0; i < index; i++)
         {
-            dequeue();
-        }
-
-        Node *temp = other.front;
-        while (temp != nullptr)
-        {
-            enqueue(temp->data);
             temp = temp->next;
+        }
+
+        return temp->data;
+    }
+
+    Queue &operator=(const Queue &other)
+    {
+        if (this != &other)
+        {
+            while (!isEmpty())
+            {
+                dequeue();
+            }
+
+            Node *temp = other.front;
+            while (temp != nullptr)
+            {
+                enqueue(temp->data);
+                temp = temp->next;
+            }
         }
 
         return *this;
     }
-
-    void print()
+    Queue<T> &operator+(const T &data)
     {
-        Node *temp = front;
-        while (temp != nullptr)
+        enqueue(data);
+        return *this;
+    }
+
+    Queue<T> &operator-(const T &data)
+    {
+        dequeue();
+        return *this;
+    }
+    ~Queue()
+    {
+        while (!isEmpty())
         {
-            cout << temp->data << " ";
-            temp = temp->next;
+            dequeue();
         }
-        cout << endl;
     }
 };
 
 int main()
 {
-    Queue q1, q2, q4, q5, q7, q8;
-    q1.enqueue(1);
-    q1.enqueue(2);
-    q2.enqueue(3);
-    q2.enqueue(4);
+    Queue<int> q;
 
-    q4.enqueue(7);
-    q4.enqueue(8);
-    q5.enqueue(3);
-    q5.enqueue(4);
+    q + 10;
+    q + 20;
+    q + 30;
 
-    q7.enqueue(1);
-    q7.enqueue(2);
-    q8.enqueue(3);
-    q8.enqueue(4);
+    cout << "First element: " << q[0] << endl;
+    cout << "Second element: " << q[1] << endl;
+    cout << "Third element: " << q[2] << endl;
 
-    Queue q3 = q1 + q2;
-    Queue q6 = q4 - q5;
+    q - 10;
+    q - 20;
 
-    cout << "Operator overload(+)" << endl;
-    cout << "Elements of q1: ";
-    q1.print();
-    cout << "Elements of q2: ";
-    q2.print();
-    cout << "Result: ";
-    q3.print();
+    cout << "First element after dequeue: " << q[0] << endl;
 
-    cout << "\nOperator overload(-)" << endl;
-    cout << "Elements of q4: ";
-    q4.print();
-    cout << "Elements of q5: ";
-    q5.print();
-    cout << "Result: ";
-    q6.print();
+    q - 30;
 
-    cout << "\nOperator overload(=)" << endl;
-    cout << "Elements of q7: ";
-    q7.print();
-    cout << "Elements of q8: ";
-    q8.print();
-    q7 = q8;
-    cout << "Result: ";
-    q7.print();
-
-    /*
-    Queue q1, q2;
-
-      cout << "Введите 2 элемента для первой очереди:" << endl;
-      for (int i = 0; i < 2; i++) {
-        int data;
-        cin >> data;
-        q1.enqueue(data);
-      }
-
-      cout << "Введите 2 элемента для второй очереди:" << endl;
-      for (int i = 0; i < 2; i++) {
-        int data;
-        cin >> data;
-        q2.enqueue(data);
-      }
-
-      // Выбор операции
-      int operation;
-      do {
-        cout << "Выберите операцию:" << endl;
-        cout << "1. Сложение (+)" << endl;
-        cout << "2. Вычитание (-)" << endl;
-        cout << "3. Присвоение (=)" << endl;
-        cin >> operation;
-      } while (operation < 1 || operation > 3);
-
-      // Результат
-      Queue result;
-      switch (operation) {
-        case 1:
-          result = q1 + q2;
-          break;
-        case 2:
-          result = q1 - q2;
-          break;
-        case 3:
-          q1 = q2;
-          result = q1;
-          break;
-      }
-
-      cout << "Результат:" << endl;
-      result.print();
-    */
-    return 0;
+    cout << "Queue empty? " << (q.isEmpty() ? "Yes" : "No") << endl;
 }
