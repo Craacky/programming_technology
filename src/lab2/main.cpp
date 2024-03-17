@@ -165,5 +165,50 @@ int main()
     cout << "Result: ";
     q7.print();
 
+    /*
+    Queue q1, q2;
+
+      cout << "Введите 2 элемента для первой очереди:" << endl;
+      for (int i = 0; i < 2; i++) {
+        int data;
+        cin >> data;
+        q1.enqueue(data);
+      }
+
+      cout << "Введите 2 элемента для второй очереди:" << endl;
+      for (int i = 0; i < 2; i++) {
+        int data;
+        cin >> data;
+        q2.enqueue(data);
+      }
+
+      // Выбор операции
+      int operation;
+      do {
+        cout << "Выберите операцию:" << endl;
+        cout << "1. Сложение (+)" << endl;
+        cout << "2. Вычитание (-)" << endl;
+        cout << "3. Присвоение (=)" << endl;
+        cin >> operation;
+      } while (operation < 1 || operation > 3);
+
+      // Результат
+      Queue result;
+      switch (operation) {
+        case 1:
+          result = q1 + q2;
+          break;
+        case 2:
+          result = q1 - q2;
+          break;
+        case 3:
+          q1 = q2;
+          result = q1;
+          break;
+      }
+
+      cout << "Результат:" << endl;
+      result.print();
+    */
     return 0;
 }
