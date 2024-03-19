@@ -1,8 +1,10 @@
 #include <iostream>
+#include <limits>
 
 using namespace std;
 
 template <typename T>
+
 class Queue
 {
 private:
@@ -66,12 +68,29 @@ public:
         return front == nullptr;
     }
 
+    void printQueue() const
+    {
+        if (isEmpty())
+        {
+            cout << "Empty queue!" << endl;
+            return;
+        }
+
+        Node *temp = front;
+        cout << "Queue elements: ";
+        while (temp != nullptr)
+        {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+
     T &operator[](int index)
     {
         if (isEmpty())
         {
             cout << "Queue empty!" << endl;
-            exit(1);
         }
 
         Node *temp = front;
@@ -108,7 +127,7 @@ public:
         return *this;
     }
 
-    Queue<T> &operator-(const T &data)
+    Queue<T> &operator-()
     {
         dequeue();
         return *this;
@@ -121,25 +140,62 @@ public:
         }
     }
 };
+int getIntInput()
+{
+    int num;
+    cout << "Enter integer value: ";
+    while (!(cin >> num))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Invalid input. \n Please enter an integer: ";
+    }
 
+    return num;
+}
 int main()
 {
-    Queue<int> q;
+    Queue<int> q, q1;
 
-    q + 10;
-    q + 20;
-    q + 30;
+    int setter = 0;
+    do
+    {
+        cout << "--------------Overload playground--------------" << endl;
+        cout << "(1)(+) Add element to queue." << endl;
+        cout << "(2)(-) Delete element from queue." << endl;
+        cout << "(3)(=) Copy current queue to buffer queue." << endl;
+        cout << "(4) Check if queue is empty." << endl;
+        cout << "(5) Print all queues." << endl;
+        cout << "(6) Exit." << endl;
+        cout << "Choice: ";
+        cin >> setter;
 
-    cout << "First element: " << q[0] << endl;
-    cout << "Second element: " << q[1] << endl;
-    cout << "Third element: " << q[2] << endl;
+        switch (setter)
+        {
+        case 1:
+            int value;
+            value = getIntInput();
+            q + value;
+            break;
+        case 2:
+            -q;
+            cout << "Queue after deleted element." << endl;
+            q.printQueue();
+            break;
+        case 3:
+            q1 = q;
+            q1.printQueue();
+            break;
+        case 4:
+            q[0];
+            break;
+        case 5:
+            cout << "--Current queue--" << endl;
+            q.printQueue();
+            cout << "--Copied queue--" << endl;
+            q1.printQueue();
+            break;
+        }
 
-    q - 10;
-    q - 20;
-
-    cout << "First element after dequeue: " << q[0] << endl;
-
-    q - 30;
-
-    cout << "Queue empty? " << (q.isEmpty() ? "Yes" : "No") << endl;
+    } while (setter != 6);
 }
