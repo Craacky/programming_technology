@@ -47,7 +47,6 @@ public:
         if (isEmpty())
         {
             cout << "Queue empty!" << endl;
-            exit(1);
         }
 
         T data = front->data;
@@ -140,9 +139,9 @@ public:
         }
     }
 };
-int getIntInput()
+double getDoubleInput()
 {
-    int num;
+    double num;
     cout << "Enter integer value: ";
     while (!(cin >> num))
     {
@@ -155,9 +154,10 @@ int getIntInput()
 }
 int main()
 {
-    Queue<int> q, q1;
+    Queue<double> q, q1;
 
     int setter = 0;
+    int answer = 0;
     do
     {
         cout << "--------------Overload playground--------------" << endl;
@@ -173,21 +173,54 @@ int main()
         switch (setter)
         {
         case 1:
-            int value;
-            value = getIntInput();
-            q + value;
+            double value;
+            cout << "ADD to 1 or 2 ? ";
+            cin >> answer;
+            value = getDoubleInput();
+            if (answer == 1)
+            {
+                q + value;
+            }
+            else if (answer == 2)
+            {
+                q1 + value;
+            }
+
             break;
         case 2:
-            -q;
+            cout << "DELETE from 1 or 2 ? ";
+            cin >> answer;
             cout << "Queue after deleted element." << endl;
-            q.printQueue();
+            if (answer == 1)
+            {
+                -q;
+                q.printQueue();
+            }
+            else if (answer == 2)
+            {
+                -q1;
+                q1.printQueue();
+            }
+            cin.clear();
             break;
         case 3:
-            q1 = q;
-            q1.printQueue();
+            cout << "Copy (1 to 2) or (2 to 1)";
+            cin >> answer;
+            if (answer == 1)
+            {
+                q1 = q;
+            }
+            else if (answer == 2)
+            {
+                q = q1;
+            }
+            cin.clear();
             break;
         case 4:
+            cout << "First queue(empty all ok):";
             q[0];
+            cout << "Second queue(empty all ok):";
+            q1[0];
             break;
         case 5:
             cout << "--Current queue--" << endl;
